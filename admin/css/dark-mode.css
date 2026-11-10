@@ -1,0 +1,130 @@
+/* ============================================================
+   LectroHub — Dark Mode Theme Overrides (Admin)
+   Same 'lh-theme' key as the customer side — one toggle affects
+   both. Load order relative to responsive_fixes.css / edge_fix.css
+   doesn't matter since this only targets [data-theme="dark"].
+   ============================================================ */
+
+html[data-theme="dark"] {
+    color-scheme: dark;
+
+    --bg:       #070a10;
+    --panel:    #0d1117;
+    --surface:  #0d1117;
+    --card:     #0d1117;
+    --card2:    #10151d;
+    --card3:    #141a24;
+    --input-bg: #10151d;
+
+    --bd:       rgba(255, 255, 255, .08);
+    --bdh:      rgba(0, 229, 255, .35);
+    --border:   #1b232c;
+
+    --ac:       #00e5ff;
+    --ac-dim:   rgba(0, 229, 255, .10);
+    --ac-glow:  0 0 20px rgba(0, 229, 255, .25);
+    --accent2:  #ff6b35;
+
+    --green:    #4ade80;
+    --amber:    #f59e0b;
+    --red:      #f87171;
+    --purple:   #a78bfa;
+
+    --txt:      #e6edf3;
+    --muted:    #9aa7b3;
+    --dim:      #6b7785;
+
+    --sh:  0 4px 20px rgba(0, 0, 0, .35);
+    --sh2: 0 12px 40px rgba(0, 0, 0, .5);
+}
+
+html[data-theme="dark"] body,
+html[data-theme="dark"] .adm-card,
+html[data-theme="dark"] .nav-dd-menu,
+html[data-theme="dark"] .toast,
+html[data-theme="dark"] .sidebar,
+html[data-theme="dark"] .navbar,
+html[data-theme="dark"] .stat-card,
+html[data-theme="dark"] .filter-bar,
+html[data-theme="dark"] .prod-card {
+    transition: background-color .25s ease, color .25s ease, border-color .25s ease;
+}
+@media (prefers-reduced-motion: reduce) {
+    html[data-theme="dark"] * { transition: none !important; }
+}
+
+html[data-theme="dark"] body::before {
+    opacity: .4;
+}
+
+/* ── Header / sidebar / KPI cards ── */
+html[data-theme="dark"] .navbar {
+    background: rgba(13, 17, 23, .95);
+}
+
+html[data-theme="dark"] .sidebar {
+    background: var(--card);
+}
+
+html[data-theme="dark"] .stat-card {
+    background: var(--card);
+}
+
+/* ── FIX: search/filter bar at the top of Categories, Users,
+   Products, Orders and Coupons pages — hardcoded #fff ── */
+html[data-theme="dark"] .filter-bar,
+html[data-theme="dark"] .filter-bar select:focus,
+html[data-theme="dark"] .filter-bar input[type="text"]:focus {
+    background: var(--card);
+}
+
+/* ── FIX: product grid cards on products.php — hardcoded #fff ── */
+html[data-theme="dark"] .prod-card {
+    background: var(--card);
+}
+
+/* Product-card hover action buttons (edit/view/delete) */
+html[data-theme="dark"] .pca-btn {
+    background: rgba(13, 17, 23, .92);
+    color: var(--muted);
+}
+
+/* ── FIX: footer, toast, pagination buttons, quick-action cards,
+   and any plain <input:focus> — all hardcoded #fff ── */
+html[data-theme="dark"] .admin-footer,
+html[data-theme="dark"] .toast,
+html[data-theme="dark"] .pag-btn,
+html[data-theme="dark"] .qa-card,
+html[data-theme="dark"] input:focus {
+    background: var(--card);
+}
+
+/* ── The rest of the earlier "white box" hardcodes ── */
+html[data-theme="dark"] .adm-card,
+html[data-theme="dark"] .products-table-wrap,
+html[data-theme="dark"] .btn-icon,
+html[data-theme="dark"] .btn-secondary,
+html[data-theme="dark"] .nav-dd-menu,
+html[data-theme="dark"] .nav-search input:focus {
+    background: var(--card);
+}
+
+html[data-theme="dark"] .btn-icon,
+html[data-theme="dark"] .btn-secondary,
+html[data-theme="dark"] .pag-btn {
+    border-color: var(--border);
+    color: var(--txt);
+}
+
+html[data-theme="dark"] .oauth-btn:hover,
+html[data-theme="dark"] .nav-icon-btn:hover,
+html[data-theme="dark"] .nav-user:hover {
+    background: var(--card2);
+    border-color: var(--bdh);
+}
+
+/* ── Theme toggle button icon swap ── */
+.theme-toggle-btn .icon-sun  { display: none; }
+.theme-toggle-btn .icon-moon { display: block; }
+html[data-theme="dark"] .theme-toggle-btn .icon-sun  { display: block; }
+html[data-theme="dark"] .theme-toggle-btn .icon-moon { display: none; }

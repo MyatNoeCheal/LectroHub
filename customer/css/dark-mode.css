@@ -1,0 +1,327 @@
+/* ============================================================
+   LectroHub — Dark Mode Theme Overrides (Customer)
+   Toggled by data-theme="dark" on <html> (see js/theme-toggle.js).
+   Persisted in localStorage under 'lh-theme' — shared across the
+   whole origin, so it also carries over to /admin pages.
+   ============================================================ */
+
+html[data-theme="dark"] {
+    color-scheme: dark;
+
+    /* Backgrounds */
+    --bg:       #070a10;
+    --panel:    #0d1117;
+    --surface:  #0d1117;
+    --card:     #0d1117;
+    --card2:    #10151d;
+    --card3:    #141a24;
+    --input-bg: #10151d;
+
+    /* Borders */
+    --bd:       rgba(255, 255, 255, .08);
+    --bdh:      rgba(0, 229, 255, .35);
+    --border:   #1b232c;
+
+    /* Accents */
+    --ac:       #00e5ff;
+    --ac-dim:   rgba(0, 229, 255, .10);
+    --ac-glow:  0 0 20px rgba(0, 229, 255, .25);
+    --accent:   #00e5ff;
+    --accent2:  #ff6b35;
+    --orange:   #ff6b35;
+
+    /* Status */
+    --green:    #4ade80;
+    --amber:    #f59e0b;
+    --red:      #f87171;
+    --purple:   #a78bfa;
+    --gold:     #f59e0b;
+
+    /* Text */
+    --txt:      #e6edf3;
+    --muted:    #9aa7b3;
+    --dim:      #6b7785;
+
+    /* Shadows */
+    --sh:  0 4px 20px rgba(0, 0, 0, .35);
+    --sh2: 0 12px 40px rgba(0, 0, 0, .5);
+}
+
+/* Smooth transition instead of a hard flash between themes */
+html[data-theme="dark"] body,
+html[data-theme="dark"] nav,
+html[data-theme="dark"] .nav-drop-menu,
+html[data-theme="dark"] .toast,
+html[data-theme="dark"] .cart-summary-card,
+html[data-theme="dark"] .co-card,
+html[data-theme="dark"] .co-summary-card {
+    transition: background-color .25s ease, color .25s ease, border-color .25s ease;
+}
+@media (prefers-reduced-motion: reduce) {
+    html[data-theme="dark"] * { transition: none !important; }
+}
+
+/* Soften the dotted background pattern on dark backgrounds */
+html[data-theme="dark"] body::before {
+    opacity: .5;
+}
+
+/* ── FIX: the top nav hardcodes rgba(255,255,255,.92) instead of
+   using var(--card) — that's why it stayed white in dark mode. ── */
+html[data-theme="dark"] nav {
+    background: rgba(13, 17, 23, .92);
+}
+
+/* ── FIX: wishlist heart button on product cards, same issue ── */
+html[data-theme="dark"] .product-wishlist {
+    background: rgba(13, 17, 23, .85);
+}
+
+/* ── Other selectors that hardcode #fff instead of var(--card)/(--input-bg) ── */
+html[data-theme="dark"] .nav-search input:focus,
+html[data-theme="dark"] .newsletter-form input:focus,
+html[data-theme="dark"] .nav-drawer,
+html[data-theme="dark"] .shop-search-wrap {
+    background: var(--input-bg);
+}
+
+html[data-theme="dark"] .btn-hero-secondary {
+    background: var(--card2);
+    color: var(--txt);
+}
+
+html[data-theme="dark"] .toast {
+    background: var(--card2);
+    color: var(--txt);
+    border: 1px solid var(--border);
+}
+
+/* ── Theme toggle button icon swap ── */
+.theme-toggle-btn .icon-sun  { display: none; }
+.theme-toggle-btn .icon-moon { display: block; }
+html[data-theme="dark"] .theme-toggle-btn .icon-sun  { display: block; }
+html[data-theme="dark"] .theme-toggle-btn .icon-moon { display: none; }
+
+
+ /* Add to dark-mode.css */
+
+/* Soften white-background product photos so they don't glare
+   against the dark UI. Doesn't touch the image file — just a
+   slight brightness pull-down plus an inset shadow that fades
+   the white edge into the surrounding dark card. */
+html[data-theme="dark"] .product-img-wrap img,
+html[data-theme="dark"] .gallery-main img,
+html[data-theme="dark"] .wl-img-wrap img,
+html[data-theme="dark"] .deal-img-wrap img,
+html[data-theme="dark"] .hero-device-card img,
+html[data-theme="dark"] .cos-img img,
+html[data-theme="dark"] .oc-thumb-wrap img,
+html[data-theme="dark"] .ps-card-imgwrap img {
+    filter: brightness(.94) contrast(1.02);
+}
+
+html[data-theme="dark"] .product-img-wrap,
+html[data-theme="dark"] .gallery-main,
+html[data-theme="dark"] .wl-img-wrap,
+html[data-theme="dark"] .deal-img-wrap,
+html[data-theme="dark"] .hero-device-card,
+html[data-theme="dark"] .oc-thumb-wrap {
+    position: relative;
+    overflow: hidden;
+}
+
+html[data-theme="dark"] .product-img-wrap::after,
+html[data-theme="dark"] .gallery-main::after,
+html[data-theme="dark"] .wl-img-wrap::after,
+html[data-theme="dark"] .deal-img-wrap::after,
+html[data-theme="dark"] .hero-device-card::after,
+html[data-theme="dark"] .oc-thumb-wrap::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,.06), inset 0 0 22px rgba(0,0,0,.4);
+    border-radius: inherit;
+}
+
+/* ============================================================
+   LectroHub — Dark Mode Theme Overrides (Customer)
+   Toggled by data-theme="dark" on <html> (see js/theme-toggle.js).
+   Persisted in localStorage under 'lh-theme' — shared across the
+   whole origin, so it also carries over to /admin pages.
+   ============================================================ */
+
+html[data-theme="dark"] {
+    color-scheme: dark;
+
+    /* Backgrounds */
+    --bg:       #070a10;
+    --panel:    #0d1117;
+    --surface:  #0d1117;
+    --card:     #0d1117;
+    --card2:    #10151d;
+    --card3:    #141a24;
+    --input-bg: #10151d;
+
+    /* Borders */
+    --bd:       rgba(255, 255, 255, .08);
+    --bdh:      rgba(0, 229, 255, .35);
+    --border:   #1b232c;
+
+    /* Accents */
+    --ac:       #00e5ff;
+    --ac-dim:   rgba(0, 229, 255, .10);
+    --ac-glow:  0 0 20px rgba(0, 229, 255, .25);
+    --accent:   #00e5ff;
+    --accent2:  #ff6b35;
+    --orange:   #ff6b35;
+
+    /* Status */
+    --green:    #4ade80;
+    --amber:    #f59e0b;
+    --red:      #f87171;
+    --purple:   #a78bfa;
+    --gold:     #f59e0b;
+
+    /* Text */
+    --txt:      #e6edf3;
+    --muted:    #9aa7b3;
+    --dim:      #6b7785;
+
+    /* Shadows */
+    --sh:  0 4px 20px rgba(0, 0, 0, .35);
+    --sh2: 0 12px 40px rgba(0, 0, 0, .5);
+}
+
+/* Smooth transition instead of a hard flash between themes */
+html[data-theme="dark"] body,
+html[data-theme="dark"] nav,
+html[data-theme="dark"] .nav-drop-menu,
+html[data-theme="dark"] .toast,
+html[data-theme="dark"] .cart-summary-card,
+html[data-theme="dark"] .co-card,
+html[data-theme="dark"] .co-summary-card {
+    transition: background-color .25s ease, color .25s ease, border-color .25s ease;
+}
+@media (prefers-reduced-motion: reduce) {
+    html[data-theme="dark"] * { transition: none !important; }
+}
+
+/* Soften the dotted background pattern on dark backgrounds */
+html[data-theme="dark"] body::before {
+    opacity: .5;
+}
+
+/* ── FIX: the top nav hardcodes rgba(255,255,255,.92) instead of
+   using var(--card) — that's why it stayed white in dark mode. ── */
+html[data-theme="dark"] nav {
+    background: rgba(13, 17, 23, .92);
+}
+
+/* ── FIX: wishlist heart button on product cards, same issue ── */
+html[data-theme="dark"] .product-wishlist {
+    background: rgba(13, 17, 23, .85);
+}
+
+/* ── Other selectors that hardcode #fff instead of var(--card)/(--input-bg) ── */
+html[data-theme="dark"] .nav-search input:focus,
+html[data-theme="dark"] .newsletter-form input:focus,
+html[data-theme="dark"] .nav-drawer,
+html[data-theme="dark"] .shop-search-wrap {
+    background: var(--input-bg);
+}
+
+html[data-theme="dark"] .btn-hero-secondary {
+    background: var(--card2);
+    color: var(--txt);
+}
+
+html[data-theme="dark"] .toast {
+    background: var(--card2);
+    color: var(--txt);
+    border: 1px solid var(--border);
+}
+
+/* ── Theme toggle button icon swap ── */
+.theme-toggle-btn .icon-sun  { display: none; }
+.theme-toggle-btn .icon-moon { display: block; }
+html[data-theme="dark"] .theme-toggle-btn .icon-sun  { display: block; }
+html[data-theme="dark"] .theme-toggle-btn .icon-moon { display: none; }
+
+
+ /* Add to dark-mode.css */
+
+/* Soften white-background product photos so they don't glare
+   against the dark UI. Doesn't touch the image file — just a
+   slight brightness pull-down plus an inset shadow that fades
+   the white edge into the surrounding dark card. */
+html[data-theme="dark"] .product-img-wrap img,
+html[data-theme="dark"] .gallery-main img,
+html[data-theme="dark"] .wl-img-wrap img,
+html[data-theme="dark"] .deal-img-wrap img,
+html[data-theme="dark"] .hero-device-card img,
+html[data-theme="dark"] .cos-img img,
+html[data-theme="dark"] .oc-thumb-wrap img,
+html[data-theme="dark"] .ps-card-imgwrap img {
+    filter: brightness(.94) contrast(1.02);
+}
+
+html[data-theme="dark"] .product-img-wrap,
+html[data-theme="dark"] .gallery-main,
+html[data-theme="dark"] .wl-img-wrap,
+html[data-theme="dark"] .deal-img-wrap,
+html[data-theme="dark"] .hero-device-card,
+html[data-theme="dark"] .oc-thumb-wrap {
+    position: relative;
+    overflow: hidden;
+}
+
+html[data-theme="dark"] .product-img-wrap::after,
+html[data-theme="dark"] .gallery-main::after,
+html[data-theme="dark"] .wl-img-wrap::after,
+html[data-theme="dark"] .deal-img-wrap::after,
+html[data-theme="dark"] .hero-device-card::after,
+html[data-theme="dark"] .oc-thumb-wrap::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,.06), inset 0 0 22px rgba(0,0,0,.4);
+    border-radius: inherit;
+}
+
+/* ============================================================
+   Chatbot widget (chatbot-deployment/static/index.php)
+   The widget defines its own --lh-* variables scoped to
+   .chatbox-widget instead of reusing the site's --bg/--txt/etc,
+   so it never picked up the theme toggle. Redeclaring those same
+   variables here, under a more specific selector, overrides them
+   without touching the widget's own file — and because they're
+   custom properties, the panel recolors instantly the moment
+   data-theme flips, no reload or JS change needed.
+   ============================================================ */
+html[data-theme="dark"] .chatbox-widget {
+    --lh-bg:       #0d1117;
+    --lh-bg-2:     #10151d;
+    --lh-border:   #1b232c;
+    --lh-text:     #e6edf3;
+    --lh-muted:    #9aa7b3;
+    --lh-dim:      #6b7785;
+    --lh-accent:   #00c2d6;
+    --lh-accent-2: #00e5ff;
+    --lh-glow:     rgba(0, 194, 214, .35);
+}
+
+/* ── FIX: header and footer-input backgrounds are hardcoded to
+   #ffffff in the widget's own <style> block instead of using
+   var(--lh-bg), the same class of bug already fixed above for
+   nav/.product-wishlist. Overriding them here since we can't
+   edit the widget partial's inline styles directly. ── */
+html[data-theme="dark"] .chatbox-widget .chatbox__header,
+html[data-theme="dark"] .chatbox-widget .chatbox__footer input {
+    background: var(--lh-bg);
+}
+
+html[data-theme="dark"] .chatbox-widget .chatbox__support {
+    box-shadow: 0 18px 46px rgba(0, 0, 0, .5), 0 2px 8px rgba(0, 0, 0, .3);
+}

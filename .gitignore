@@ -1,0 +1,37 @@
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# SIEM local configuration
+siem_config.local.php
+
+# Python virtual environment
+chatbot-deployment/venv/
+chatbot-deployment/__pycache__/
+**/__pycache__/
+*.pyc
+
+# PHP Composer dependencies
+vendor/
+
+# Database dump - keep local
+lectrohub_db.sql
+
+# Logs
+*.log
+
+# IDE
+.vscode/
+.idea/
+
+# Windows
+Thumbs.db
+
+# Google OAuth local credentials
+auth/google_oauth_config.local.php
+
+# Local secret configuration
+lectrohub_db/mailer_config.php
+auth/google_oauth_config.php
+lectrohub_db/connection.php

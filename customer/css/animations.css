@@ -1,0 +1,339 @@
+/* ═══════════════════════════════════════════════════════════
+   LectroHub — PREMIUM MOTION SYSTEM  (lh-* namespace)
+   ───────────────────────────────────────────────────────────
+   Loaded AFTER main.css. Everything in here is additive:
+   it never overrides main.css's own hover/active states —
+   the JS (animations.js) applies hidden/visible states via
+   INLINE styles, not persistent classes, specifically so it
+   can never fight with your existing :hover transforms.
+
+   This file only supplies:
+     1. The dark, cinematic hero variant (.lh-hero-dark)
+     2. Hero video + 3D canvas mount styling
+     3. Glass navbar-on-scroll
+     4. Custom cursor
+     5. 3D tilt transition helper
+     6. Page-transition loader
+     7. Small utility keyframes
+
+   Respects prefers-reduced-motion throughout.
+
+   ── FIX (theme + visibility) ──
+   .lh-hero-video::after used to hardcode a light rgba()
+   gradient, so in dark mode it painted a pale wash over the
+   video and made it unreadable / effectively invisible. It
+   now uses var(--bg) via color-mix so it always matches the
+   current theme.
+
+   Round 2: the first fix still washed the video out — the
+   gradient started tinting from 0% down and reached a fully
+   OPAQUE var(--bg) by 100%, so roughly the whole video sat
+   under a heavy, increasingly solid tint. It's now transparent
+   for the top ~45% (video shows at full strength there) and
+   only blends toward --bg in the bottom third, capping at 85%
+   opacity instead of fully solid, so the video reads clearly
+   through the whole hero. Video opacity raised again, .4 -> .65.
+═══════════════════════════════════════════════════════════ */
+
+:root {
+    --lh-bg-deep: #05070a;
+    --lh-glow: rgba(0, 200, 255, .35);
+    --lh-ease: cubic-bezier(.16, 1, .3, 1);
+}
+
+
+/* ══════════════════════════════════════════
+   1. LIGHT-THEME CIRCUIT BACKDROP
+   Your hero keeps its original light background
+   and colors — nothing here changes the theme.
+   This just gives the 3D circuit canvas a soft
+   halo so the nodes/traces read clearly against
+   a light background instead of disappearing
+   into it.
+══════════════════════════════════════════ */
+.lh-hero-circuit {
+    filter: drop-shadow(0 0 18px rgba(0, 136, 204, .18));
+}
+
+
+/* ══════════════════════════════════════════
+   2. HERO VIDEO BACKGROUND
+   Drop an .mp4 at customer/assets/video/hero-loop.mp4
+   to activate. Missing file = it hides itself
+   automatically (see index.php + animations.js).
+══════════════════════════════════════════ */
+.lh-hero-video {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.lh-hero-video video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: .65;
+    filter: saturate(1.1);
+}
+
+.lh-hero-video::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    /* Round 3: text legibility is no longer this element's job —
+       see section 2b below, which gives the text its own blurred
+       backdrop + shadow instead. This is back to what it should
+       always have been: a light touch that blends the bottom edge
+       of the video into the section beneath it, not a wash over
+       the whole thing. */
+    background: linear-gradient(180deg,
+        transparent 70%,
+        color-mix(in srgb, var(--bg) 55%, transparent) 100%);
+}
+
+
+/* ══════════════════════════════════════════
+   2b. HERO TEXT LEGIBILITY (blur + shadow)
+   Replaces "wash the whole video" with a small
+   blurred glass panel sitting only behind the
+   text column, plus a text-shadow for crisp edge
+   contrast wherever the panel isn't enough. The
+   video itself stays clear and vivid everywhere
+   else in the hero.
+══════════════════════════════════════════ */
+.hero-content {
+    isolation: isolate;
+}
+
+.hero-content::before {
+    content: '';
+    position: absolute;
+    inset: -60px -80px;
+    z-index: -1;
+    background: color-mix(in srgb, var(--bg) 42%, transparent);
+    backdrop-filter: blur(22px) saturate(120%);
+    -webkit-backdrop-filter: blur(22px) saturate(120%);
+    pointer-events: none;
+    /* Fade the blur/tint out toward the edges instead of stopping at a
+       hard rectangle — no visible box outline, it just dissolves into
+       the video. Sized/positioned to cover the eyebrow-through-subtext
+       block, not just the title. */
+    mask-image: radial-gradient(ellipse 78% 78% at 38% 42%, black 40%, transparent 92%);
+    -webkit-mask-image: radial-gradient(ellipse 78% 78% at 38% 42%, black 40%, transparent 92%);
+}
+
+/* No backdrop-filter support: fall back to a slightly stronger tint
+   so there's still some contrast boost behind the text. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .hero-content::before {
+        background: color-mix(in srgb, var(--bg) 65%, transparent);
+    }
+}
+
+.hero-eyebrow,
+.hero-title,
+.hero-sub {
+    text-shadow:
+        0 1px 3px color-mix(in srgb, var(--bg) 70%, transparent),
+        0 2px 14px color-mix(in srgb, var(--bg) 45%, transparent);
+}
+
+.hero-title .line2 {
+    text-shadow:
+        0 1px 3px color-mix(in srgb, var(--bg) 70%, transparent),
+        0 0 16px color-mix(in srgb, var(--ac) 55%, transparent);
+}
+
+/* The eyebrow pill's usual background (--ac-dim) is only ~10% opaque —
+   fine on a solid page background, but nearly invisible over video.
+   Give it a background of its own just in the hero. */
+.hero .hero-eyebrow {
+    background: color-mix(in srgb, var(--bg) 78%, transparent);
+    border-color: color-mix(in srgb, var(--ac) 40%, transparent);
+}
+
+/* --muted is a mid grey tuned for a solid page background; against a
+   busy video it disappears even with a shadow. Pull it toward --txt
+   and give it a firmer shadow so it actually reads. */
+.hero-sub,
+.hero-title .line3 {
+    color: color-mix(in srgb, var(--muted) 45%, var(--txt) 55%);
+    text-shadow:
+        0 1px 4px color-mix(in srgb, var(--bg) 85%, transparent),
+        0 3px 18px color-mix(in srgb, var(--bg) 60%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-content::before {
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        background: color-mix(in srgb, var(--bg) 55%, transparent);
+    }
+}
+
+
+/* ══════════════════════════════════════════
+   3. 3D CIRCUIT HERO MOUNT (Three.js canvas)
+══════════════════════════════════════════ */
+.lh-hero-circuit {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.lh-hero-circuit canvas {
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+
+/* ══════════════════════════════════════════
+   4. GLASS NAVBAR ON SCROLL
+   JS toggles .lh-nav-scrolled on <nav> past
+   24px of scroll.
+══════════════════════════════════════════ */
+nav {
+    transition: height .3s var(--lh-ease), box-shadow .3s var(--lh-ease), background .3s var(--lh-ease);
+}
+
+nav.lh-nav-scrolled {
+    box-shadow: 0 12px 34px rgba(20, 40, 80, .14);
+    background: rgba(255, 255, 255, .82);
+    backdrop-filter: blur(22px) saturate(160%);
+    -webkit-backdrop-filter: blur(22px) saturate(160%);
+}
+
+nav.lh-nav-scrolled .nav-logo {
+    transform: scale(.94);
+    transition: transform .3s var(--lh-ease);
+}
+
+
+/* ══════════════════════════════════════════
+   5. 3D TILT — transition helper only.
+   JS sets the actual rotateX/rotateY inline
+   (see initTilt in animations.js) so this
+   class never overrides hover states from
+   main.css — it purely smooths the motion.
+══════════════════════════════════════════ */
+.lh-tilt-target {
+    transition: transform .4s cubic-bezier(.2, .8, .2, 1);
+    will-change: transform;
+}
+
+
+/* ══════════════════════════════════════════
+   6. MAGNETIC BUTTONS
+   Same principle — JS drives the transform,
+   this just smooths the release.
+══════════════════════════════════════════ */
+.lh-magnetic {
+    transition: transform .35s cubic-bezier(.2, .8, .2, 1);
+}
+
+
+/* ══════════════════════════════════════════
+   7. CUSTOM CURSOR
+   Hidden automatically on touch devices and
+   when prefers-reduced-motion is set (JS never
+   creates these elements in that case).
+══════════════════════════════════════════ */
+#lhCursorDot,
+#lhCursorRing {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 100000;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#lhCursorDot {
+    width: 6px;
+    height: 6px;
+    background: var(--ac, #0088cc);
+    margin-left: 0;
+}
+
+#lhCursorRing {
+    width: 34px;
+    height: 34px;
+    border: 1.5px solid rgba(0, 136, 204, .45);
+    transition: width .25s var(--lh-ease), height .25s var(--lh-ease), border-color .25s var(--lh-ease), background .25s var(--lh-ease);
+}
+
+#lhCursorRing.lh-cursor-active {
+    width: 52px;
+    height: 52px;
+    background: rgba(0, 136, 204, .08);
+    border-color: rgba(0, 136, 204, .7);
+}
+
+@media (hover: none), (prefers-reduced-motion: reduce) {
+
+    #lhCursorDot,
+    #lhCursorRing {
+        display: none !important;
+    }
+}
+
+
+/* ══════════════════════════════════════════
+   8. PAGE TRANSITION (soft cross-fade wipe)
+══════════════════════════════════════════ */
+#lhPageTransition {
+    position: fixed;
+    inset: 0;
+    background: var(--bg, #f0f3f8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    z-index: 99999;
+    transition: opacity .28s ease, visibility .28s ease;
+}
+
+#lhPageTransition.is-active {
+    opacity: 1;
+    visibility: visible;
+}
+
+#lhPageTransition::after {
+    content: '';
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 2px solid var(--bd, rgba(30, 50, 100, .12));
+    border-top-color: var(--ac, #0088cc);
+    animation: lhSpin .7s linear infinite;
+}
+
+@keyframes lhSpin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+/* ══════════════════════════════════════════
+   9. REDUCED MOTION — global safety net
+   Anything animations.js reveals gets its
+   inline styles cleared instantly when this
+   is set (see JS), so no extra CSS override
+   is strictly needed — but this keeps things
+   safe even if a future dev adds a lh-reveal
+   class directly in markup.
+══════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+
+    .lh-tilt-target,
+    .lh-magnetic {
+        transition: none !important;
+    }
+}

@@ -1,0 +1,237 @@
+{
+  "intents": [
+    {
+      "tag": "greeting",
+      "patterns": ["Hi", "Hey", "Hello", "Good day", "What's up", "Is anyone there?", "Hey there", "Howdy"],
+      "responses": ["Hey there! Welcome to LectroHub. How can I help you today?", "Hello! I'm the LectroHub assistant  -  ask me about orders, shipping, or products.", "Hi! What can I do for you today?"]
+    },
+    {
+      "tag": "goodbye",
+      "patterns": ["Bye", "See you later", "Goodbye", "That's all", "Thanks, bye", "I'm done"],
+      "responses": ["Thanks for stopping by LectroHub! Have a great day.", "Bye! Come back if you need anything else.", "See you soon  -  happy shopping!"]
+    },
+    {
+      "tag": "thanks",
+      "patterns": ["Thanks", "Thank you", "That's helpful", "Thanks a lot", "Appreciate it"],
+      "responses": ["You're welcome!", "Anytime! Anything else I can help with?", "Glad I could help!"]
+    },
+    {
+      "tag": "shipping_info",
+      "patterns": [
+        "How much is shipping",
+        "What is the delivery fee",
+        "Do you deliver to my city",
+        "How long does shipping take",
+        "What are your shipping zones",
+        "Is delivery free",
+        "Shipping cost"
+      ],
+      "responses": [
+        "Shipping fees depend on your city  -  enter your delivery address at checkout and the fee will be calculated automatically.",
+        "We deliver across all listed cities in Myanmar. The exact fee is shown once you select your city on the checkout page.",
+        "Delivery usually takes 2-5 business days depending on your location."
+      ]
+    },
+    {
+      "tag": "order_status",
+      "patterns": [
+        "Where is my order",
+        "Track my order",
+        "Order status",
+        "Has my order shipped",
+        "When will my order arrive",
+        "Check order"
+      ],
+      "responses": [
+        "You can check your order status by logging in and visiting the 'My Orders' page.",
+        "Order tracking is available under your account's Orders section  -  it shows Processing, Shipped, or Delivered.",
+        "For a specific order, please share your order number and I can help point you in the right direction."
+      ]
+    },
+    {
+      "tag": "cancel_order",
+      "patterns": [
+        "Can I cancel my order",
+        "How do I cancel an order",
+        "Cancel order",
+        "I want to cancel my purchase"
+      ],
+      "responses": [
+        "Orders can be cancelled before they are shipped from your 'My Orders' page. Once shipped, please contact support instead.",
+        "Go to My Orders, select the order, and choose Cancel if it's still in Processing status."
+      ]
+    },
+    {
+      "tag": "returns_refunds",
+      "patterns": [
+        "What is your return policy",
+        "Can I return a product",
+        "How do refunds work",
+        "I want a refund",
+        "Return policy",
+        "Is this returnable"
+      ],
+      "responses": [
+        "Most electronics can be returned within 7 days of delivery if unopened and in original packaging.",
+        "Refunds are processed to your original payment method within 5-7 business days after we receive the returned item.",
+        "To start a return, go to My Orders, select the item, and choose 'Request Return'."
+      ]
+    },
+    {
+      "tag": "payment_methods",
+      "patterns": [
+        "What payment methods do you accept",
+        "Can I pay with cash on delivery",
+        "Do you accept credit card",
+        "How can I pay",
+        "Payment options"
+      ],
+      "responses": [
+        "We accept credit/debit cards, mobile wallets, and cash on delivery depending on your city.",
+        "At checkout you'll see all available payment options for your delivery address."
+      ]
+    },
+    {
+      "tag": "coupon_discount",
+      "patterns": [
+        "Do you have any coupons",
+        "Is there a discount code",
+        "How do I use a promo code",
+        "Any active deals",
+        "Discount coupon"
+      ],
+      "responses": [
+        "You can enter a coupon code at checkout in the 'Apply Coupon' field.",
+        "Check our homepage or Deals section for currently active discount codes.",
+        "Coupons apply automatically once entered and validated at checkout."
+      ]
+    },
+    {
+      "tag": "product_availability",
+      "patterns": [
+        "Is this product in stock",
+        "Do you have this item available",
+        "Is it out of stock",
+        "When will it be restocked",
+        "Stock availability"
+      ],
+      "responses": [
+        "You can check real-time stock on the product page  -  it shows 'In Stock' or 'Out of Stock' clearly.",
+        "If an item shows out of stock, you can enable notifications and we'll let you know when it's restocked."
+      ]
+    },
+    {
+      "tag": "product_recommendation",
+      "patterns": [
+        "Can you recommend a laptop",
+        "What's a good smartphone under budget",
+        "Suggest a good camera",
+        "Best headphones you have",
+        "Recommend a gaming device",
+        "What smartwatch should I buy"
+      ],
+      "responses": [
+        "Sure! Let me know your budget and what you'll mainly use it for, and I can point you to the right category.",
+        "Check out our Featured Products section for top picks in each category  -  Smartphones, Laptops, Audio, Cameras, and more.",
+        "Browse by category on our Products page  -  you can filter by brand and price to find the best match."
+      ]
+    },
+    {
+      "tag": "price_inquiry",
+      "patterns": [
+        "How much does this cost",
+        "What is the price",
+        "Price of this product",
+        "How expensive is it"
+      ],
+      "responses": [
+        "Prices are listed on each product page along with current stock and specs.",
+        "You can find the exact price on the product detail page  -  let me know the product name if you'd like me to check."
+      ]
+    },
+    {
+      "tag": "warranty",
+      "patterns": [
+        "Does this have a warranty",
+        "What is the warranty period",
+        "Is this product covered under warranty",
+        "Warranty details"
+      ],
+      "responses": [
+        "Most electronics come with a manufacturer warranty of 6-12 months  -  check the product description for specifics.",
+        "Warranty terms vary by brand and are listed on the product page under 'Details'."
+      ]
+    },
+    {
+      "tag": "account_help",
+      "patterns": [
+        "How do I create an account",
+        "I forgot my password",
+        "How do I reset my password",
+        "How do I update my profile",
+        "Login issue"
+      ],
+      "responses": [
+        "You can create an account or sign in from the top navigation menu.",
+        "To reset your password, click 'Forgot Password' on the sign-in page and follow the instructions sent to your email."
+      ]
+    },
+    {
+      "tag": "wishlist_help",
+      "patterns": [
+        "How do I save an item for later",
+        "How does wishlist work",
+        "Add to wishlist",
+        "Where is my saved items list"
+      ],
+      "responses": [
+        "Click the heart icon on any product to add it to your Wishlist  -  you can find saved items under 'My Wishlist'."
+      ]
+    },
+    {
+      "tag": "contact_support",
+      "patterns": [
+        "I need to talk to a human",
+        "Contact support",
+        "Customer service",
+        "How can I reach support",
+        "I have a complaint"
+      ],
+      "responses": [
+        "You can reach our support team through the Contact page, or email us  -  we usually respond within 24 hours.",
+        "I can help with common questions, but for anything account-specific, please use the Contact Support page for a human agent."
+      ]
+    },
+    {
+      "tag": "categories_offered",
+      "patterns": [
+        "What categories do you sell",
+        "What kind of products do you have",
+        "What do you sell",
+        "Product categories"
+      ],
+      "responses": [
+        "LectroHub carries Smartphones, Laptops, Audio, Cameras, Drones, Gaming, Tablets, Wearables, TVs, and Accessories."
+      ]
+    },
+    {
+  "tag": "order_items",
+  "patterns": [
+    "What's in my order",
+    "What did I order",
+    "What did I buy",
+    "Show me my order items",
+    "What items are in my last order",
+    "List my order contents",
+    "What products did I purchase"
+  ],
+  "responses": [
+    "Let me pull that up for you."
+  ]
+}
+
+
+
+    
+  ]
+}
