@@ -35,3 +35,12 @@ auth/google_oauth_config.local.php
 lectrohub_db/mailer_config.php
 auth/google_oauth_config.php
 lectrohub_db/connection.php
+
+# Chatbot local env
+chatbot-deployment/.env
+
+# Example config files ARE committed
+!lectrohub_db/connection.example.php
+!lectrohub_db/mailer_config.example.php
+!auth/google_oauth_config.example.php
+!siem_config.local.example.php

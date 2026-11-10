@@ -30,8 +30,9 @@
  *
  * <?php
  * const SIEM_API_BASE = 'http://localhost:8000';
- * const SIEM_API_KEY = '7777';
+ * const SIEM_API_KEY = 'paste-your-long-random-key-here';
  * const SIEM_SELF_TEST_ENABLED = false;
+ * const SIEM_TRUST_PROXY = false; // true only behind a proxy/CDN you control
  *
  * This file is ignored by Git.
  */
@@ -63,6 +64,14 @@ if (file_exists($localConfig)) {
  * CONFIGURATION
  * =========================================================
  */
+
+/*
+ * X-Forwarded-For can be forged by any client, so it is only trusted
+ * when the site is explicitly configured as running behind a proxy.
+ */
+if (!defined('SIEM_TRUST_PROXY')) {
+    define('SIEM_TRUST_PROXY', false);
+}
 
 if (!defined('SIEM_CONNECT_TIMEOUT_MS')) {
     define('SIEM_CONNECT_TIMEOUT_MS', 800);
@@ -253,12 +262,12 @@ function siem_send_event(array $event): void
 /**
  * Gets the client's IP address.
  *
- * If the site is behind a proxy/CDN, X-Forwarded-For
- * is checked first.
+ * X-Forwarded-For is used only when SIEM_TRUST_PROXY is true
+ * (site is behind a proxy/CDN you control); otherwise REMOTE_ADDR.
  */
 function siem_client_ip(): string
 {
-    if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+    if (SIEM_TRUST_PROXY && !empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
 
         $parts = explode(
             ',',

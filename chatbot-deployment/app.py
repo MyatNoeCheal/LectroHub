@@ -1,10 +1,15 @@
+import os
+
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 
 from chat import get_response, bot_name
 
 app = Flask(__name__)
-CORS(app)
+# Only the LectroHub site origin(s) may call the chatbot from a browser.
+_origins = [o.strip() for o in os.environ.get(
+    "CHATBOT_ALLOWED_ORIGINS", "http://localhost,http://127.0.0.1").split(",") if o.strip()]
+CORS(app, origins=_origins)
 
 
 @app.get("/")
@@ -26,4 +31,11 @@ def predict():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    # Debug mode exposes an interactive code-execution console, so it is OFF
+    # unless FLASK_DEBUG=1 is set explicitly, and the server only listens on
+    # localhost by default.
+    app.run(
+        host=os.environ.get("CHATBOT_HOST", "127.0.0.1"),
+        port=int(os.environ.get("CHATBOT_PORT", "5000")),
+        debug=os.environ.get("FLASK_DEBUG") == "1",
+    )
