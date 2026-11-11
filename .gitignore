@@ -37,6 +37,7 @@ auth/google_oauth_config.php
 lectrohub_db/connection.php
 
 # Chatbot local env
+chatbot_config.local.php
 chatbot-deployment/.env
 
 # Example config files ARE committed
@@ -44,3 +45,4 @@ chatbot-deployment/.env
 !lectrohub_db/mailer_config.example.php
 !auth/google_oauth_config.example.php
 !siem_config.local.example.php
+!chatbot_config.local.example.php

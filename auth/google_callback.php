@@ -97,7 +97,7 @@ try {
     $post_redirect  = $_SESSION['google_oauth_redirect'] ?? '';
     unset($_SESSION['google_oauth_redirect']);
 
-    session_regenerate_id(false);
+    session_regenerate_id(true);
 
     $_SESSION['user'] = [
         'id'        => $user['id'],

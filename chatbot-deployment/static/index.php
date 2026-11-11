@@ -414,13 +414,12 @@
 
     this.messages.push({ name: 'User', message: text1 });
 
-    fetch('http://127.0.0.1:5000/predict', {
+    fetch('/LectroHub/customer/chatbot_proxy.php', {
             method: 'POST',
+            credentials: 'same-origin',
             body: JSON.stringify({
-                message: text1,
-                user_id: window.LH_USER_ID || null
+                message: text1
             }),
-            mode: 'cors',
             headers: { 'Content-Type': 'application/json' }
         })
         .then(r => r.json())

@@ -1,3 +1,4 @@
+import hmac
 import os
 
 from flask import Flask, request, jsonify
@@ -6,6 +7,13 @@ from flask_cors import CORS
 from chat import get_response, bot_name
 
 app = Flask(__name__)
+
+# /predict trusts the user_id it receives, so only the LectroHub PHP server
+# (which knows the real logged-in user) may call it. It proves itself with
+# this shared secret.
+_SHARED_SECRET = os.environ.get("CHATBOT_SHARED_SECRET", "").strip()
+if not _SHARED_SECRET:
+    raise RuntimeError("CHATBOT_SHARED_SECRET is not set; refusing to start.")
 # Only the LectroHub site origin(s) may call the chatbot from a browser.
 _origins = [o.strip() for o in os.environ.get(
     "CHATBOT_ALLOWED_ORIGINS", "http://localhost,http://127.0.0.1").split(",") if o.strip()]
@@ -19,6 +27,10 @@ def health():
 
 @app.post("/predict")
 def predict():
+    supplied = request.headers.get("X-Chatbot-Secret", "")
+    if not hmac.compare_digest(supplied, _SHARED_SECRET):
+        return jsonify({"error": "Unauthorized"}), 401
+
     data = request.get_json(silent=True) or {}
     message = (data.get("message") or "").strip()
     user_id = data.get("user_id")

@@ -32,8 +32,8 @@ if ($user && $user['password'] === null) {
         $guest_cart     = $_SESSION['cart']     ?? [];
         $guest_wishlist = $_SESSION['wishlist'] ?? [];
 
-        /* Regenerate session ID safely: delete old file, keep data */
-        session_regenerate_id(false);
+        /* Regenerate session ID (old one is destroyed; session data is kept) */
+        session_regenerate_id(true);
 
         /* Store core user data */
         $_SESSION['user'] = [
